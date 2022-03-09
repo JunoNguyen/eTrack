@@ -4,14 +4,14 @@ import Timeclock from '../Timeclock';
 
 const Dashboard = () => {
 
-    const margin5px = {
-        marginTop: "10px",
+    const margin = {
+        marginBottom: "10px",
     };
 
     return (
         <div>
             <div className="row">
-                <div className="col-md-12 col-xl-4 grid-margin stretch-card">
+                <div className="col-md-12 col-xl-4 grid-margin stretch-card" style={margin}>
                     <div className="card">
                         <div className="card-body">
                             <h4 className="card-title">Clock In</h4>
@@ -32,7 +32,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-12 col-xl-4 grid-margin stretch-card">
+                <div className="col-md-12 col-xl-4 grid-margin stretch-card" style={margin}>
                     <div className="card">
                         <div className="card-body">
                             <h4 className="card-title">To do list</h4>
@@ -42,7 +42,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="col-md-4 grid-margin stretch-card">
-                    <div className="card">
+                    <div className="card" style={margin}>
                         <div className="card-body">
                             <h4 className="card-title">View Timesheet</h4>
                             <div className="aligner-wrapper">
@@ -54,7 +54,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="card">
+                    <div className="card" style={margin}>
                         <div className="card-body">
                             <h4 className="card-title">Manager Messages</h4>
                             <div className="aligner-wrapper">
@@ -68,7 +68,7 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="col-md-8 grid-margin stretch-card">
+                <div className="col-md-8 grid-margin stretch-card" style={margin}>
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex flex-row justify-content-between">
