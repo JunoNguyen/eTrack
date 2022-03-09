@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
-import { ADD_PROFILE } from '../utils/mutations';
+import { ADD_EMPLOYEE } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
@@ -12,7 +12,7 @@ const Signup = () => {
     email: '',
     password: '',
   });
-  const [addProfile, { error, data }] = useMutation(ADD_PROFILE);
+  const [addEmployee, { error, data }] = useMutation(ADD_EMPLOYEE);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -28,11 +28,11 @@ const Signup = () => {
     console.log(formState);
 
     try {
-      const { data } = await addProfile({
+      const { data } = await addEmployee({
         variables: { ...formState },
       });
 
-      Auth.login(data.addProfile.token);
+      Auth.login(data.addEmployee.token);
     } catch (e) {
       console.error(e);
     }
@@ -87,7 +87,7 @@ const Signup = () => {
 
             {error && (
               <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
+                {JSON.stringify(error.message)}
               </div>
             )}
           </div>

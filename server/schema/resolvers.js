@@ -14,7 +14,7 @@ const resolvers = {
         const employee = await Employee.create({ name, email, password });
         const token = signToken(employee);
   
-        return { token, profile };
+        return { token, employee};
       },
       login: async (parent, { email, password }) => {
         const employee = await Employee.findOne({ email });
