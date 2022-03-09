@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "react-chartjs-2": "^4.0.1",
+    "react-jvectormap": "^0.0.16",
+    "react-slick": "^0.28.1"
   },
   "name": "etrack",
   "version": "1.0.0",
