@@ -59,9 +59,32 @@ const Dashboard = () => {
                             <h4 className="card-title">Manager Messages</h4>
                             <div className="aligner-wrapper">
                                 <div className="absolute center-content">
-                                    {/* ADD TIMESHEET BUTTON LINK */}
-                                    <h5 className="font-weight-normal text-whiite text-center mb-2 text-white">1200</h5>
-                                    <p className="text-small text-muted text-center mb-0">Total</p>
+                                    <div className="preview-item border-bottom" style={margin}>
+                                        <div className="preview-thumbnail">
+                                            <div className="preview-icon bg-info">
+                                                <i className="mdi mdi-clock"></i>
+                                            </div>
+                                        </div>
+                                        <div className="preview-item-content d-sm-flex flex-grow">
+                                            <div className="flex-grow">
+                                                <h6 className="preview-subject">Martin M.</h6>
+                                                <p className="text-muted mb-0">Please clean up desk space. It is pretty messy. Thanks!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="preview-item border-bottom" style={margin}>
+                                        <div className="preview-thumbnail">
+                                            <div className="preview-icon bg-info">
+                                                <i className="mdi mdi-clock"></i>
+                                            </div>
+                                        </div>
+                                        <div className="preview-item-content d-sm-flex flex-grow">
+                                            <div className="flex-grow">
+                                                <h6 className="preview-subject">Tom W.</h6>
+                                                <p className="text-muted mb-0">Can you code the header for our website? Thanks.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -87,12 +110,9 @@ const Dashboard = () => {
                                             {/* RUN A MAP TO POST CURRENT AVAILABLE PICK UP SHIFTS */}
                                             <div className="preview-item-content d-sm-flex flex-grow">
                                                 <div className="flex-grow">
-                                                    <h6 className="preview-subject">Admin dashboard design</h6>
-                                                    <p className="text-muted mb-0">Broadcast web app mockup</p>
-                                                </div>
-                                                <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                                                    <p className="text-muted">15 minutes ago</p>
-                                                    <p className="text-muted mb-0">30 tasks, 5 issues </p>
+                                                    <h6 className="preview-subject">9AM TO 5PM</h6>
+                                                    <p className="text-muted mb-0">03/22/22</p>
+                                                    <button className="btn btn-primary" style={margin}>Pick up</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -104,12 +124,9 @@ const Dashboard = () => {
                                             </div>
                                             <div className="preview-item-content d-sm-flex flex-grow">
                                                 <div className="flex-grow">
-                                                    <h6 className="preview-subject">Wordpress Development</h6>
-                                                    <p className="text-muted mb-0">Upload new design</p>
-                                                </div>
-                                                <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                                                    <p className="text-muted">1 hour ago</p>
-                                                    <p className="text-muted mb-0">23 tasks, 5 issues </p>
+                                                    <h6 className="preview-subject">12PM TO 9PM</h6>
+                                                    <p className="text-muted mb-0">03/24/22</p>
+                                                    <button className="btn btn-primary" style={margin}>Pick up</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,46 +138,9 @@ const Dashboard = () => {
                                             </div>
                                             <div className="preview-item-content d-sm-flex flex-grow">
                                                 <div className="flex-grow">
-                                                    <h6 className="preview-subject">Project meeting</h6>
-                                                    <p className="text-muted mb-0">New project discussion</p>
-                                                </div>
-                                                <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                                                    <p className="text-muted">35 minutes ago</p>
-                                                    <p className="text-muted mb-0">15 tasks, 2 issues</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="preview-item border-bottom">
-                                            <div className="preview-thumbnail">
-                                                <div className="preview-icon bg-danger">
-                                                    <i className="mdi mdi-email-open"></i>
-                                                </div>
-                                            </div>
-                                            <div className="preview-item-content d-sm-flex flex-grow">
-                                                <div className="flex-grow">
-                                                    <h6 className="preview-subject">Broadcast Mail</h6>
-                                                    <p className="text-muted mb-0">Sent release details to team</p>
-                                                </div>
-                                                <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                                                    <p className="text-muted">55 minutes ago</p>
-                                                    <p className="text-muted mb-0">35 tasks, 7 issues </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="preview-item">
-                                            <div className="preview-thumbnail">
-                                                <div className="preview-icon bg-warning">
-                                                    <i className="mdi mdi-chart-pie"></i>
-                                                </div>
-                                            </div>
-                                            <div className="preview-item-content d-sm-flex flex-grow">
-                                                <div className="flex-grow">
-                                                    <h6 className="preview-subject">UI Design</h6>
-                                                    <p className="text-muted mb-0">New application planning</p>
-                                                </div>
-                                                <div className="mr-auto text-sm-right pt-2 pt-sm-0">
-                                                    <p className="text-muted">50 minutes ago</p>
-                                                    <p className="text-muted mb-0">27 tasks, 4 issues </p>
+                                                    <h6 className="preview-subject">9AM TO 5PM</h6>
+                                                    <p className="text-muted mb-0">03/25/22</p>
+                                                    <button className="btn btn-primary" style={margin}>Pick up</button>
                                                 </div>
                                             </div>
                                         </div>
