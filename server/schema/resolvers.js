@@ -19,6 +19,22 @@ const resolvers = {
   
         return { token, employee};
       },
+      clockIn: async (parent, { clockIn }) => {
+        return Time.create({ clockIn })
+      },
+      clockOut: async (parent, { timeId, clockOut }) => {
+        return Time.findOneAndUpdate(
+          { _id: timeId },
+          { clockOut: clockOut }
+        );
+      },
+      addTime: async (parent, { employeeId, timeId }) => {
+
+        return await Employee.findOneAndUpdate(
+          { _id: employeeId },
+          { $addToSet: { time: timeId }}
+        );
+      },
       login: async (parent, { email, password }) => {
         const employee = await Employee.findOne({ email });
   

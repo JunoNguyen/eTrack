@@ -28,6 +28,9 @@ const typeDefs = gql`
   type Mutation {
     addEmployee(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    clockIn(clockIn: String!): Time
+    clockOut(timeId: ID!, clockOut: String!): Time
+    addTime(employeeId: ID!, timeId: ID!): Employee
   }
 `;
 
