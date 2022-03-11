@@ -19,6 +19,12 @@ const profileSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  time: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Time'
+    }
+  ]
 });
 
 // set up pre-save middleware to create password

@@ -6,6 +6,13 @@ const typeDefs = gql`
     name: String
     email: String
     password: String
+    time: [Time]!
+  }
+
+  type Time {
+    _id: ID
+    clockIn: String
+    clockOut: String    
   }
 
   type Auth {
@@ -15,6 +22,7 @@ const typeDefs = gql`
 
   type Query {
     employees: [Employee]!
+    time: [Time]!
   }
 
   type Mutation {

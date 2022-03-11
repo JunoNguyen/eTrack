@@ -1,12 +1,15 @@
-const { Employee } = require('../models');
+const { Employee, Time } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const {signToken} = require('../utils/auth');
 
 const resolvers = {
     Query: {
       employees: async () => {
-        return Employee.find();
+        return Employee.find().populate('Time');
       },
+      time: async () => {
+        return Time.find();
+      }
     },
   
     Mutation: {
