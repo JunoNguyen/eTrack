@@ -20,7 +20,7 @@ const resolvers = {
         return { token, employee};
       },
       clockIn: async (parent, { clockIn }) => {
-        return Time.create({ clockIn })
+        return await Time.create({ clockIn })
       },
       clockOut: async (parent, { timeId, clockOut }) => {
         return Time.findOneAndUpdate(
