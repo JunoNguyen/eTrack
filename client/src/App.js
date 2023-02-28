@@ -45,12 +45,6 @@ function App() {
               <Route exact path='/home'>
                 <Home />
               </Route>
-              <Route exact path='/login'>
-                <Login />
-              </Route>
-              <Route exact path='/signup'>
-                <Signup />
-              </Route>
             </div>
           </div>
         </Router>
