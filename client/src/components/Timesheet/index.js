@@ -29,7 +29,7 @@ const Timesheet = () => {
                         <p className="text-small text-muted text-center mb-0">Total</p>
                     </div>
                 </div>
-                <table class="table table-striped">
+                <table className="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Date</th>
@@ -38,7 +38,7 @@ const Timesheet = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {times.map(time => <Times date={time.date} timeIn={time.timeIn} timeOut={time.timeOut} />)}
+                        {times.map((time, index) => <Times key={index} date={time.date} timeIn={time.timeIn} timeOut={time.timeOut} />)}
                     </tbody>
                 </table>
             </div>

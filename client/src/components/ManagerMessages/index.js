@@ -28,7 +28,7 @@ const ManagerMessages = () => {
                 <h4 className="card-title">Manager Messages</h4>
                 <div className="aligner-wrapper">
                     <div className="absolute center-content">
-                        {messages.map(message => <Messages name={message.name} message={message.message} />)}
+                        {messages.map((message, index) => <Messages key={index} name={message.name} message={message.message} />)}
                     </div>
                 </div>
             </div>

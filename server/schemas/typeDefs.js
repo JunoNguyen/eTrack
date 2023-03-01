@@ -2,11 +2,10 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type Employee {
-    _id: ID
-    name: String
+    _id: ID!
+    name: String!
     email: String
-    password: String
-    time: [Time]!
+    time: [Time]
   }
 
   type Time {
@@ -23,6 +22,7 @@ const typeDefs = gql`
   type Query {
     employees: [Employee]!
     time: [Time]!
+    me: Employee
   }
 
   type Mutation {
