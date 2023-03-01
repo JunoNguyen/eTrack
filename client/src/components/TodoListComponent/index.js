@@ -109,7 +109,7 @@ export class TodoListComponent extends Component {
     render() {
         return (
             <>
-                <form className="add-items d-flex" onSubmit={this.addTodo}>
+                <form className="add-items d-flex my-2" onSubmit={this.addTodo}>
                     <input
                         type="text"
                         className="form-control h-auto"
@@ -120,7 +120,7 @@ export class TodoListComponent extends Component {
                     <button type="submit" className="btn btn-primary">Add</button>
                 </form>
                 <div className="list-wrapper">
-                    <ul className="d-flex flex-column todo-list">
+                    <ul className="d-flex flex-column todo-list list-group">
                         {this.state.todos.map((todo, index) => {
                             return <ListItem
                                 isCompleted={todo.isCompleted}
@@ -139,7 +139,7 @@ export class TodoListComponent extends Component {
 const ListItem = (props) => {
 
     return (
-        <li className={(props.isCompleted ? 'completed' : null)}>
+        <li className="list-group-item">
             <div className="form-check">
                 <label htmlFor="" className="form-check-label">
                     <input className="checkbox" type="checkbox"
