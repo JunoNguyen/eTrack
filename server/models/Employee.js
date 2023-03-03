@@ -27,7 +27,12 @@ const profileSchema = new Schema({
     }
   ],
   savedNotes: [notesSchema],
-});
+},
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  });
 
 // set up pre-save middleware to create password
 profileSchema.pre('save', async function (next) {

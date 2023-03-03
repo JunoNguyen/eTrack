@@ -5,7 +5,9 @@ const typeDefs = gql`
     _id: ID!
     name: String!
     email: String
+    token: ID!
     time: [Time]
+    savedNotes: [Note]!
   }
 
   type Time {
@@ -15,7 +17,7 @@ const typeDefs = gql`
   }
 
   type Note {
-    noteId: ID!
+    _id: ID!
     note: String!
   }
 
@@ -25,8 +27,7 @@ const typeDefs = gql`
   }
 
   input NoteInput {
-    description: String!
-    noteId: String!
+    note: String!
   }
 
   type Query {
@@ -42,7 +43,7 @@ const typeDefs = gql`
     clockOut(timeId: ID!, clockOut: String!): Time
     addTime(employeeId: ID!, timeId: ID!): Employee
     saveNote(noteData: NoteInput!): Employee
-    removeNote(noteId: ID!): Employee
+    # removeNote(noteId: ID!): Employee
   }
 `;
 

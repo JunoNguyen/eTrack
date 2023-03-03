@@ -24,3 +24,31 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const SAVE_NOTE = gql`
+  mutation saveNote($noteData: NoteInput!) {
+    saveNote(noteData: $noteData) {
+      _id
+      name
+      email
+      savedNotes {
+        _id
+        note
+      }
+    }
+  }
+`;
+
+// export const REMOVE_NOTE = gql`
+//   mutation removeNote($noteId: ID!) {
+//     removeNote(noteId: $noteId) {
+//       _id
+//       name
+//       email
+//       savedNotes {
+//         _id
+//         note
+//       }
+//     }
+//   }
+// `;

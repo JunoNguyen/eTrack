@@ -6,7 +6,7 @@ import { QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth'
 
-const Timeclock = () => {
+const Timeclock = (props) => {
     const { loading, data } = useQuery(QUERY_ME);
 
     const userData = data?.me || {};

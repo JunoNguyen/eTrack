@@ -7,10 +7,6 @@ const notesSchema = new Schema({
     required: true,
   },
   // saved book id from GoogleBooks
-  noteId: {
-    type: String,
-    required: true,
-  },
 });
 
 module.exports = notesSchema;

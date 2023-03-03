@@ -6,6 +6,10 @@ export const QUERY_ME = gql`
       _id
       name
       email
+      savedNotes {
+        _id
+        note
+      }
     }
   }
 `;

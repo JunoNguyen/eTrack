@@ -1,140 +1,85 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_ME } from '../../utils/queries';
+import { SAVE_NOTE } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
-export class TodoList extends Component {
+const TodoList = () => {
 
-    render() {
-        return (
-            // <div className="col-md-12 col-xl-4 grid-margin stretch-card">
-                <div className="card">
-                    <div className="card-body">
-                        <h4 className="card-title">To do list</h4>
-                        <TodoListComponent />
-                    </div>
-                </div>
-            // </div>
-        )
-    }
+    return (
+        <div className="card">
+            <div className="card-body">
+                <h4 className="card-title">To do list</h4>
+                <TodoListComponent />
+            </div>
+        </div>
+    )
 }
 
-export class TodoListComponent extends Component {
+const TodoListComponent = (props) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            todos: [
-                {
-                    id: 1,
-                    task: 'Pick up kids from school',
-                    isCompleted: false
-                },
-                {
-                    id: 2,
-                    task: 'Prepare for presentation',
-                    isCompleted: true
-                },
-                {
-                    id: 3,
-                    task: 'Print Statements',
-                    isCompleted: false
-                },
-                {
-                    id: 4,
-                    task: 'Create invoice',
-                    isCompleted: false
-                },
-                {
-                    id: 5,
-                    task: 'Call John',
-                    isCompleted: true
-                },
-                {
-                    id: 6,
-                    task: 'Meeting with Alisa',
-                    isCompleted: false
-                }
-            ],
-            inputValue: '',
+    const [noteValue, setNoteValue] = useState('');
+
+    const { loading, data } = useQuery(QUERY_ME);
+    const [saveNote, { error }] = useMutation(SAVE_NOTE);
+
+    const userData = data?.me || {};
+    const notesData = props.userData?.savedNotes || [];
+
+    const handleSaveNote = async (event) => {
+        event.preventDefault();
+        // get token
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        console.log(noteValue);
+
+        if (!token) {
+            return false;
         }
+        
+        try {
+            const { data } = await saveNote({
+                variables: { noteData: { note: noteValue} },
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-        this.statusChangedHandler = this.statusChangedHandler.bind(this);
-        this.addTodo = this.addTodo.bind(this);
-        this.removeTodo = this.removeTodo.bind(this);
-        this.inputChangeHandler = this.inputChangeHandler.bind(this);
-    }
-
-    statusChangedHandler(event, id) {
-        const todo = { ...this.state.todos[id] };
-        todo.isCompleted = event.target.checked;
-
-        const todos = [...this.state.todos];
-        todos[id] = todo;
-
-        this.setState({
-            todos: todos
-        })
-    }
-
-    addTodo(event) {
+    const handleChange = (event) => {
         event.preventDefault();
 
-        const todos = [...this.state.todos];
-        todos.unshift({
-            id: todos.length ? todos[todos.length - 1].id + 1 : 1,
-            task: this.state.inputValue,
-            isCompleted: false
+        setNoteValue(event.target.value)
+    };
 
-        })
-
-        this.setState({
-            todos: todos,
-            inputValue: ''
-        })
-    }
-
-    removeTodo(index) {
-        const todos = [...this.state.todos];
-        todos.splice(index, 1);
-
-        this.setState({
-            todos: todos
-        })
-    }
-
-    inputChangeHandler(event) {
-        this.setState({
-            inputValue: event.target.value
-        });
-    }
-
-    render() {
-        return (
-            <>
-                <form className="add-items d-flex my-2" onSubmit={this.addTodo}>
-                    <input
-                        type="text"
-                        className="form-control h-auto"
-                        placeholder="What do you need to do today?"
-                        value={this.state.inputValue}
-                        onChange={this.inputChangeHandler}
-                        required />
-                    <button type="submit" className="btn btn-primary">Add</button>
-                </form>
-                <div className="list-wrapper">
-                    <ul className="d-flex flex-column todo-list list-group">
-                        {this.state.todos.map((todo, index) => {
-                            return <ListItem
-                                isCompleted={todo.isCompleted}
-                                changed={(event) => this.statusChangedHandler(event, index)}
-                                key={todo.id}
-                                remove={() => this.removeTodo(index)}
-                            >{todo.task}</ListItem>
-                        })}
-                    </ul>
-                </div>
-            </>
-        )
-    }
+    return (
+        <>
+            {/* <form className="add-items d-flex my-2" onSubmit={this.addTodo}> */}
+            <form className="add-items d-flex my-2">
+                <input
+                    type="text"
+                    className="form-control h-auto"
+                    placeholder="What do you need to do today?"
+                    // value={this.state.inputValue}
+                    onChange={handleChange}
+                    required />
+                <button type="submit" className="btn btn-primary" onClick={handleSaveNote}>Add</button>
+            </form>
+            <div className="list-wrapper">
+                <ul className="d-flex flex-column todo-list list-group">
+                    {notesData.map((todo, index) => {
+                        return <ListItem
+                            // isCompleted={todo.isCompleted}
+                            // changed={(event) => statusChangedHandler(event, index)}
+                            key={todo._id}
+                        // remove={() => this.removeTodo(index)}
+                        >{todo.note}</ListItem>
+                    })}
+                </ul>
+            </div>
+        </>
+    )
 }
+// }
 
 const ListItem = (props) => {
 
@@ -143,14 +88,14 @@ const ListItem = (props) => {
             <div className="form-check">
                 <label htmlFor="" className="form-check-label">
                     <input className="checkbox" type="checkbox"
-                        checked={props.isCompleted}
-                        onChange={props.changed}
+                    // checked={props.isCompleted}
+                    // onChange={props.changed}
                     /> {props.children} <i className="input-helper"></i>
                 </label>
             </div>
-            <i className="remove mdi mdi-close-box" onClick={props.remove}></i>
+            {/* <i className="remove mdi mdi-close-box" onClick={props.remove}></i> */}
         </li>
     )
 };
 
-export default TodoList
+export default TodoList;
