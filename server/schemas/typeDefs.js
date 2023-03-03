@@ -14,9 +14,19 @@ const typeDefs = gql`
     clockOut: String    
   }
 
+  type Note {
+    noteId: ID!
+    note: String!
+  }
+
   type Auth {
     token: ID!
     employee: Employee
+  }
+
+  input NoteInput {
+    description: String!
+    noteId: String!
   }
 
   type Query {
@@ -31,6 +41,8 @@ const typeDefs = gql`
     clockIn(clockIn: String!): Time
     clockOut(timeId: ID!, clockOut: String!): Time
     addTime(employeeId: ID!, timeId: ID!): Employee
+    saveNote(noteData: NoteInput!): Employee
+    removeNote(noteId: ID!): Employee
   }
 `;
 

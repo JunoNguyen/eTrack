@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const notesSchema = require('./Notes');
 
 const profileSchema = new Schema({
   name: {
@@ -24,7 +25,8 @@ const profileSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Time'
     }
-  ]
+  ],
+  savedNotes: [notesSchema],
 });
 
 // set up pre-save middleware to create password
@@ -41,6 +43,10 @@ profileSchema.pre('save', async function (next) {
 profileSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+
+profileSchema.virtual('noteCount').get(function () {
+  return this.savedNotes.length;
+});
 
 const Employee = model('Employee', profileSchema);
 
