@@ -17,7 +17,7 @@ const typeDefs = gql`
   }
 
   type Note {
-    _id: ID!
+    _id: ID
     note: String!
   }
 
@@ -43,7 +43,7 @@ const typeDefs = gql`
     clockOut(timeId: ID!, clockOut: String!): Time
     addTime(employeeId: ID!, timeId: ID!): Employee
     saveNote(noteData: NoteInput!): Employee
-    # removeNote(noteId: ID!): Employee
+    removeNote(noteId: ID!): Employee
   }
 `;
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
-import { SAVE_NOTE } from '../../utils/mutations';
+import { SAVE_NOTE, REMOVE_NOTE } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const TodoList = () => {
@@ -24,21 +24,25 @@ const TodoListComponent = (props) => {
     const [saveNote, { error }] = useMutation(SAVE_NOTE);
 
     const userData = data?.me || {};
-    const notesData = props.userData?.savedNotes || [];
+    // const notesData = props.userData?.savedNotes || [];
+    const notesData = userData?.savedNotes || [];
 
     const handleSaveNote = async (event) => {
         event.preventDefault();
         // get token
         const token = Auth.loggedIn() ? Auth.getToken() : null;
         console.log(noteValue);
+        if (noteValue.length === 0) {
+            return false;
+        }
 
         if (!token) {
             return false;
         }
-        
+
         try {
             const { data } = await saveNote({
-                variables: { noteData: { note: noteValue} },
+                variables: { noteData: { note: noteValue } },
             });
         } catch (err) {
             console.error(err);
@@ -50,6 +54,15 @@ const TodoListComponent = (props) => {
 
         setNoteValue(event.target.value)
     };
+
+    // const handleChecked = (event) => {
+    //     console.log(event.target);
+    //     console.log('checked');
+    // }
+
+    if (loading) {
+        return <h2>LOADING...</h2>;
+    }
 
     return (
         <>
@@ -66,11 +79,13 @@ const TodoListComponent = (props) => {
             </form>
             <div className="list-wrapper">
                 <ul className="d-flex flex-column todo-list list-group">
-                    {notesData.map((todo, index) => {
+                    {notesData.map((todo) => {
                         return <ListItem
                             // isCompleted={todo.isCompleted}
                             // changed={(event) => statusChangedHandler(event, index)}
                             key={todo._id}
+                            id={todo._id}
+                        // handleChecked={handleChecked}
                         // remove={() => this.removeTodo(index)}
                         >{todo.note}</ListItem>
                     })}
@@ -82,14 +97,42 @@ const TodoListComponent = (props) => {
 // }
 
 const ListItem = (props) => {
+    const [saveNote, { error }] = useMutation(REMOVE_NOTE);
+
+    const handleRemoveNote = async (id) => {
+        // event.preventDefault();
+        // get token
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        // console.log(noteValue);
+        // if (noteValue.length === 0) {
+        //     return false;
+        // }
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const { data } = await saveNote({
+                variables: { noteId: id },
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <li className="list-group-item">
             <div className="form-check">
                 <label htmlFor="" className="form-check-label">
-                    <input className="checkbox" type="checkbox"
-                    // checked={props.isCompleted}
-                    // onChange={props.changed}
+                    <input className="checkbox" type="checkbox" id={props.id}
+                        // onChecked={() => console.log('checked')}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            handleRemoveNote(event.target.id)
+                        }
+                        }
                     /> {props.children} <i className="input-helper"></i>
                 </label>
             </div>

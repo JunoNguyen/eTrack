@@ -73,19 +73,19 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    // removeNote: async (parent, { noteId }, context) => {
-    //   if (context.user) {
-    //     const updatedEmployee = await Employee.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { savedNotes: { _id: noteId } } },
-    //       { new: true }
-    //     );
+    removeNote: async (parent, { noteId }, context) => {
+      if (context.user) {
+        const updatedEmployee = await Employee.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedNotes: { _id: noteId } } },
+          { new: true }
+        );
 
-    //     return updatedEmployee;
-    //   }
+        return updatedEmployee;
+      }
 
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+      throw new AuthenticationError('You need to be logged in!');
+    },
   }
 }
 module.exports = resolvers;
