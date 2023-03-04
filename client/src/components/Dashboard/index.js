@@ -1,49 +1,57 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TodoList from '../TodoListComponent'
 import Timeclock from '../Timeclock';
 import Timesheet from '../Timesheet'
 import ManagerMessages from '../ManagerMessages';
 import ShiftPickup from '../ShiftPickup';
 
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_ME } from '../../utils/queries';
-import { SAVE_NOTE } from '../../utils/mutations';
+// Commented out to prevent warning messages
 
-import Auth from '../../utils/auth';
+// import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { QUERY_ME } from '../../utils/queries';
+// import { SAVE_NOTE } from '../../utils/mutations';
+
+// import Auth from '../../utils/auth';
 
 const Dashboard = () => {
 
-    const [noteValue, setNoteValue] = useState('');
+    // const [noteValue, setNoteValue] = useState('');
 
     const { loading, data } = useQuery(QUERY_ME);
-    const [saveNote, { error }] = useMutation(SAVE_NOTE);
+    // const [saveNote, { error }] = useMutation(SAVE_NOTE);
 
     const userData = data?.me || {};
     // const notesData = userData?.savedNotes || [];
     
-    const handleSaveNote = async (event) => {
-        event.preventDefault();
-        // get token
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
+    // const handleSaveNote = async (event) => {
+    //     event.preventDefault();
+    //     // get token
+    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        if (!token) {
-            return false;
-        }
+    //     if (!token) {
+    //         return false;
+    //     }
 
-        try {
-            const { data } = await saveNote({
-                variables: { noteData: noteValue },
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    }
+    //     try {
+    //         const { data } = await saveNote({
+    //             variables: { noteData: noteValue },
+    //         });
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
 
-    const handleChange = (event) => {
-        event.preventDefault();
-        
-        setNoteValue(event.target.value)
-    }
+    // const handleChange = (event) => {
+    //     event.preventDefault();
+
+    //     setNoteValue(event.target.value)
+    // }
+
+    if (loading) {
+        return <h2>LOADING...</h2>;
+    };
 
     const margin = {
         margin: "5px",
@@ -56,7 +64,8 @@ const Dashboard = () => {
                     <Timeclock />
                 </div>
                 <div style={margin}>
-                    <TodoList handleChange={handleChange} handleSaveNote={handleSaveNote} userData={userData} />
+                    {/* <TodoList handleChange={handleChange} handleSaveNote={handleSaveNote} userData={userData} /> */}
+                    <TodoList userData={userData} />
                 </div>
                 <div style={margin}>
                     <Timesheet />
