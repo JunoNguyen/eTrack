@@ -1,26 +1,28 @@
 import React from 'react';
 import Messages from '../Messages';
 
-const ManagerMessages = () => {
-    // Eventually Convert to utilize Messages component
-    const messages = [
-        {
-            name: "Martin Meyers",
-            message: "Please clean up desk space. It is pretty messy. Thanks!"
-        },
-        {
-            name: "Martin Meyers",
-            message: "Please clean up desk space. It is pretty messy. Thanks!"
-        },
-        {
-            name: "Martin Meyers",
-            message: "Please clean up desk space. It is pretty messy. Thanks!"
-        },
-        {
-            name: "Martin Meyers",
-            message: "Please clean up desk space. It is pretty messy. Thanks!"
+import { useMutation } from '@apollo/client';
+import { FIND_EMPLOYEE } from '../../utils/mutations';
+
+const ManagerMessages = (props) => {
+    const [ findEmployee, { error } ] = useMutation(FIND_EMPLOYEE);
+    const userData = props.userData
+
+    const handleFindEmployee = async (event) => {
+        event.preventDefault();
+        console.log(event.target)
+
+        try {
+            const { data } = await findEmployee({
+                variables: { id: event.target.id },
+            });
+        } catch (err) {
+            console.error(err);
         }
-    ]
+    }
+
+    const messages = userData?.messages || [];
+    console.log(messages);
 
     return (
         <div className="card">
@@ -28,7 +30,7 @@ const ManagerMessages = () => {
                 <h4 className="card-title">Manager Messages</h4>
                 <div className="aligner-wrapper">
                     <div className="absolute center-content">
-                        {messages.map((message, index) => <Messages key={index} name={message.name} message={message.message} />)}
+                        {messages.map((message, index) => <Messages key={index} id={message.receiverId} name={message.message} message={message.message} onLoad={handleFindEmployee} />)}
                     </div>
                 </div>
             </div>

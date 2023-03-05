@@ -10,6 +10,30 @@ export const QUERY_ME = gql`
         _id
         note
       }
+      messages {
+        _id
+        message
+        receiverId
+      }
+    }
+  }
+`;
+
+export const QUERY_EMPLOYEE = gql`
+  {
+    employee {
+      _id
+      name
+      email
+      savedNotes {
+        _id
+        note
+      }
+      messages {
+        _id
+        message
+        receiverId
+      }
     }
   }
 `;

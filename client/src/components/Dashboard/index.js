@@ -71,7 +71,7 @@ const Dashboard = () => {
                     <Timesheet />
                 </div>
                 <div style={margin}>
-                    <ManagerMessages />
+                    <ManagerMessages userData={userData} />
                 </div>
                 <div style={margin}>
                     <ShiftPickup />

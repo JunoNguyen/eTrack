@@ -20,6 +20,17 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    // employee: async (parent, args, context) => {
+    //   if (context.user) {
+    //     // const userData = await Employee.findOne({ _id: context.user }).select('-__v -password');
+    //     const userData = await context.user.messages.map(message =>  Employee.find({ _id: message.receiverId }));
+    //     console.log(userData);
+
+    //     return userData;
+    //   }
+
+    //   throw new AuthenticationError('Not logged in');
+    // },
   },
 
   Mutation: {
@@ -92,10 +103,14 @@ const resolvers = {
       if (context.user) {
         const updatedEmployee = await Employee.findByIdAndUpdate(
           { _id: messageData.receiverId },
-          { $push: { messages: {
-            message: messageData.message,
-            receiverId: context.user._id,
-          } } },
+          {
+            $push: {
+              messages: {
+                message: messageData.message,
+                receiverId: context.user._id,
+              }
+            }
+          },
           { new: true }
         );
         console.log(messageData.receiverId)
@@ -105,6 +120,15 @@ const resolvers = {
         return updatedEmployee;
       }
       throw new AuthenticationError('You need to be logged in!');
+    },
+    employee: async (parent, { id }, context) => {
+        if (context.user) {
+          const userData = await Employee.findOne({ _id: id }).select('-__v -password');
+  
+          return userData;
+        }
+  
+        throw new AuthenticationError('Not logged in');
     },
   }
 }

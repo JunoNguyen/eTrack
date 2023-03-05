@@ -70,3 +70,22 @@ export const ADD_MESSAGE = gql`
     }
   }
 `;
+
+export const FIND_EMPLOYEE = gql`
+  mutation addMessage($id: ID!) {
+    addMessage(id: $id) {
+      _id
+      name
+      email
+      savedNotes {
+        _id
+        note
+      }
+      messages {
+        _id
+        message
+        receiverId
+      }
+    }
+  }
+`;

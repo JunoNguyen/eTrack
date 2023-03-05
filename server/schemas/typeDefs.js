@@ -45,7 +45,7 @@ const typeDefs = gql`
   type Query {
     employees: [Employee]!
     time: [Time]!
-    me: Employee
+    me: Employee!
   }
 
   type Mutation {
@@ -57,6 +57,7 @@ const typeDefs = gql`
     saveNote(noteData: NoteInput!): Employee
     removeNote(noteId: ID!): Employee
     addMessage(messageData: MessageInput!): Employee
+    employee(id: ID!): [Employee]
   }
 `;
 
