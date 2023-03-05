@@ -65,27 +65,18 @@ export const ADD_MESSAGE = gql`
       }
       messages {
         message
-        receiverId
+        senderId
+        senderName
       }
     }
   }
 `;
 
-export const FIND_EMPLOYEE = gql`
-  mutation addMessage($id: ID!) {
-    addMessage(id: $id) {
-      _id
-      name
-      email
-      savedNotes {
-        _id
-        note
-      }
-      messages {
-        _id
-        message
-        receiverId
-      }
-    }
-  }
-`;
+// export const FIND_EMPLOYEE = gql`
+//   mutation employee($id: ID!) {
+//     employee(id: $id) {
+//       _id
+//       name
+//     }
+//   }
+// `;

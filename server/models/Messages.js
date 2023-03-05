@@ -6,11 +6,16 @@ const messagesSchema = new Schema({
     type: String,
     required: true,
   },
-  receiverId: {
+  senderId: {
     type: Schema.Types.ObjectId,
     ref: 'Employee',
     required: true,
-  }
+  },
+  senderName: {
+    type: String,
+    required: true,
+  },
+
 });
 
 module.exports = messagesSchema;

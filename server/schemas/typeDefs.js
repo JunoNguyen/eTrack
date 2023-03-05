@@ -25,7 +25,8 @@ const typeDefs = gql`
   type Message {
     _id: ID
     message: String!
-    receiverId: ID
+    senderId: ID!
+    senderName: String!
   }
 
   type Auth {
@@ -57,7 +58,7 @@ const typeDefs = gql`
     saveNote(noteData: NoteInput!): Employee
     removeNote(noteId: ID!): Employee
     addMessage(messageData: MessageInput!): Employee
-    employee(id: ID!): [Employee]
+    employee(id: ID!): Employee
   }
 `;
 

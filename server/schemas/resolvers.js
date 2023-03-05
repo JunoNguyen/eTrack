@@ -107,23 +107,21 @@ const resolvers = {
             $push: {
               messages: {
                 message: messageData.message,
-                receiverId: context.user._id,
+                senderId: context.user._id,
+                senderName: context.user.name
               }
             }
           },
           { new: true }
         );
-        console.log(messageData.receiverId)
-        console.log(` Context ID: ${context.user._id}`)
-        console.log(messageData.message)
 
         return updatedEmployee;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
     employee: async (parent, { id }, context) => {
-        if (context.user) {
-          const userData = await Employee.findOne({ _id: id }).select('-__v -password');
+        if (id) {
+          const userData = await Employee.findOne({ _id: id })
   
           return userData;
         }
