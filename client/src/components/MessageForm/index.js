@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_EMPLOYEES } from '../../utils/queries';
+import { ADD_MESSAGE } from '../../utils/mutations';
 
-// I need this to have a dropdown that displays all the employees
+import Auth from '../../utils/auth';
 
 const MessageForm = () => {
+
     const countStyle = {
         float: "right",
         padding: "0.1rem 0 0 0",
         fontSize: "0.875rem",
-    }
+    };
+
+    const { loading, data } = useQuery(QUERY_EMPLOYEES);
+    const [addMessage, { error }] = useMutation(ADD_MESSAGE);
+    const employeeData = data?.employees || [];
+    // console.log(employeeData)
+
     const [selectedEmployee, setSelectedEmployee] = useState('');
     const [message, setMessage] = useState('');
     const [messageLength, setMessageLength] = useState(0);
@@ -22,22 +32,44 @@ const MessageForm = () => {
         if (name === 'message') {
             setMessageLength(message.length);
         }
-
-        console.log(message)
-        console.log(messageLength)
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         // Preventing the default behavior of the form submit (which is to refresh the page)
         e.preventDefault();
+        console.log('hit')
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        console.log(selectedEmployee);
+        if (!token) {
+            return false;
+        }
         console.log(message);
+        console.log(selectedEmployee);
+
+        try {
+            const { data } = await addMessage({
+                variables: {
+                    messageData:
+                    {
+                        message: message,
+                        receiverId: selectedEmployee
+                    }
+                },
+            });
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+            console.log(error)
+        }
 
         // Alert the user their first and last name, clear the inputs
         setSelectedEmployee('');
         setMessage('');
         setMessageLength('');
+    };
+
+    if (loading) {
+        return <h2>LOADING...</h2>;
     };
 
     return (
@@ -51,9 +83,7 @@ const MessageForm = () => {
                         name="selectedEmployee"
                         onChange={handleInputChange}>
                         {/* map all possible employees in a different component using props*/}
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        {employeeData.map(employee => <option key={employee._id} value={employee._id}>{employee.name}</option>)}
                     </select>
                 </div>
                 <div className="form-group m-2">
@@ -65,7 +95,7 @@ const MessageForm = () => {
                     <span id="maximum">/ 250</span>
                 </div>
                 <div className="form-group m-2">
-                    <button className="form-control btn btn-primary" type="button" onClick={handleFormSubmit}>
+                    <button className="form-control btn btn-primary" type="button" onClick={(e) => handleFormSubmit(e)}>
                         Submit
                     </button>
                 </div>

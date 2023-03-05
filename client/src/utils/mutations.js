@@ -52,3 +52,21 @@ export const REMOVE_NOTE = gql`
     }
   }
 `;
+
+export const ADD_MESSAGE = gql`
+  mutation addMessage($messageData: MessageInput!) {
+    addMessage(messageData: $messageData) {
+      _id
+      name
+      email
+      savedNotes {
+        _id
+        note
+      }
+      messages {
+        message
+        receiverId
+      }
+    }
+  }
+`;

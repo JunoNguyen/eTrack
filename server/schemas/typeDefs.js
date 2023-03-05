@@ -8,6 +8,7 @@ const typeDefs = gql`
     token: ID!
     time: [Time]
     savedNotes: [Note]!
+    messages: [Message]!
   }
 
   type Time {
@@ -21,6 +22,12 @@ const typeDefs = gql`
     note: String!
   }
 
+  type Message {
+    _id: ID
+    message: String!
+    receiverId: ID
+  }
+
   type Auth {
     token: ID!
     employee: Employee
@@ -28,6 +35,11 @@ const typeDefs = gql`
 
   input NoteInput {
     note: String!
+  }
+
+  input MessageInput {
+    message: String!
+    receiverId: ID!
   }
 
   type Query {
@@ -44,6 +56,7 @@ const typeDefs = gql`
     addTime(employeeId: ID!, timeId: ID!): Employee
     saveNote(noteData: NoteInput!): Employee
     removeNote(noteId: ID!): Employee
+    addMessage(messageData: MessageInput!): Employee
   }
 `;
 

@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 const notesSchema = require('./Notes');
+const messagesSchema = require('./Messages');
 
 const profileSchema = new Schema({
   name: {
@@ -27,6 +28,7 @@ const profileSchema = new Schema({
     }
   ],
   savedNotes: [notesSchema],
+  messages: [messagesSchema],
 },
   {
     toJSON: {

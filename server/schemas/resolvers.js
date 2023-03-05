@@ -5,7 +5,8 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     employees: async () => {
-      return Employee.find().populate('Time');
+      // return Employee.find().populate('Time');
+      return Employee.find()
     },
     time: async () => {
       return Time.find();
@@ -84,6 +85,25 @@ const resolvers = {
         return updatedEmployee;
       }
 
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addMessage: async (parent, { messageData }, context) => {
+      console.log('backend hit')
+      if (context.user) {
+        const updatedEmployee = await Employee.findByIdAndUpdate(
+          { _id: messageData.receiverId },
+          { $push: { messages: {
+            message: messageData.message,
+            receiverId: context.user._id,
+          } } },
+          { new: true }
+        );
+        console.log(messageData.receiverId)
+        console.log(` Context ID: ${context.user._id}`)
+        console.log(messageData.message)
+
+        return updatedEmployee;
+      }
       throw new AuthenticationError('You need to be logged in!');
     },
   }

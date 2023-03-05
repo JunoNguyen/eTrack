@@ -13,3 +13,12 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_EMPLOYEES = gql`
+  {
+    employees {
+      _id
+      name
+    }
+  }
+`;
