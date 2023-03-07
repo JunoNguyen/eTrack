@@ -13,18 +13,30 @@ const MessageForm = () => {
         fontSize: "0.875rem",
     };
 
+    // const test = {
+    //     aspectRatio : `1 / ${1/4}`
+    // }
+
     const { loading, data } = useQuery(QUERY_EMPLOYEES);
     const [addMessage, { error }] = useMutation(ADD_MESSAGE);
     const employeeData = data?.employees || [];
-    // console.log(employeeData)
 
-    const [selectedEmployee, setSelectedEmployee] = useState('');
+    // let firstSelection;
+
+    // if (employeeData !== []) {
+    //     firstSelection = employeeData[0]._id;
+    // } else {
+    //     firstSelection = '';
+    // }
+
+    const [selectedEmployee, setSelectedEmployee] = useState(``);
     const [message, setMessage] = useState('');
     const [messageLength, setMessageLength] = useState(0);
 
     const handleInputChange = (e) => {
         // Getting the value and name of the input which triggered the change
         const { name, value } = e.target;
+        console.log(e.target);
 
         name === 'selectedEmployee' ? setSelectedEmployee(value) : setMessage(value);
 
@@ -73,33 +85,36 @@ const MessageForm = () => {
     };
 
     return (
-        <div className="border border-dark rounded">
-            <form className="form m-2">
-                <div className="form-group m-2">
-                    <label htmlFor="selectedEmployee">Employee</label>
-                    <select
-                        className="form-control"
-                        value={selectedEmployee}
-                        name="selectedEmployee"
-                        onChange={handleInputChange}>
-                        {/* map all possible employees in a different component using props*/}
-                        {employeeData.map(employee => <option key={employee._id} value={employee._id}>{employee.name}</option>)}
-                    </select>
-                </div>
-                <div className="form-group m-2">
-                    <label htmlFor="message">Message</label>
-                    <textarea className="form-control" name="message" value={message} onChange={handleInputChange} rows="3" maxLength="250"></textarea>
-                </div>
-                <div style={countStyle}>
-                    <span id="current">{messageLength}</span>
-                    <span id="maximum">/ 250</span>
-                </div>
-                <div className="form-group m-2">
-                    <button className="form-control btn btn-primary" type="button" onClick={(e) => handleFormSubmit(e)}>
-                        Submit
-                    </button>
-                </div>
-            </form>
+        <div className="card border-dark vw-100">
+            <div className="card-body">
+                <form className="form m-2">
+                    <div className="form-group m-2">
+                        <label htmlFor="selectedEmployee">Employee</label>
+                        <select
+                            className="form-control"
+                            value={selectedEmployee}
+                            name="selectedEmployee"
+                            onChange={handleInputChange}>
+                            <option value="" disabled hidden>Select an Employee</option>
+                            {/* map all possible employees in a different component using props*/}
+                            {employeeData.map(employee => <option key={employee._id} value={employee._id}>{employee.name}</option>)}
+                        </select>
+                    </div>
+                    <div className="form-group m-2">
+                        <label htmlFor="message">Message</label>
+                        <textarea className="form-control" name="message" value={message} onChange={handleInputChange} rows="3" maxLength="250"></textarea>
+                    </div>
+                    <div style={countStyle}>
+                        <span id="current">{messageLength}</span>
+                        <span id="maximum">/ 250</span>
+                    </div>
+                    <div className="form-group m-2">
+                        <button className="form-control btn btn-primary" type="button" onClick={(e) => handleFormSubmit(e)}>
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

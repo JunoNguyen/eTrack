@@ -20,7 +20,7 @@ const Timesheet = () => {
         },
     ]
     return (
-        <div className="card">
+        <div className="card border-dark">
             <div className="card-body">
                 <h4 className="card-title">Timecard</h4>
                 <div className="aligner-wrapper">

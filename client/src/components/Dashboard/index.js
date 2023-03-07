@@ -77,11 +77,11 @@ const Dashboard = () => {
 
     const margin = {
         margin: "5px",
+        width: "100%"
     };
 
     return (
-        <div>
-            <div className="row">
+            <div className="row d-flex justify-content-center">
                 <div style={margin}>
                     <Timeclock />
                 </div>
@@ -98,7 +98,6 @@ const Dashboard = () => {
                     <ShiftPickup />
                 </div>
             </div>
-        </div>
     );
 }
 

@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import BasePage from './pages/BasePage';
 
 import MessageForm from './components/MessageForm';
+import ScheduledHours from './components/ScheduledHours';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -52,9 +53,9 @@ function App() {
     <div>
       <ApolloProvider client={client}>
         <Router>
-          <div className="flex-column justify-flex-start min-100-vh">
+          <div className="flex-column justify-flex-start min-100-vh w-100">
             <Header />
-            <div className="container">
+            <div className="d-flex justify-content-center m-3">
               <Route exact path='/home'>
                 <Home />
               </Route>
@@ -63,6 +64,9 @@ function App() {
               </Route>
               <Route exact path='/message'>
                 <MessageForm />
+              </Route>
+              <Route exact path='/hours'>
+                <ScheduledHours />
               </Route>
             </div>
           </div>

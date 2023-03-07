@@ -24,7 +24,7 @@ const ShiftPickup = () => {
 
     //Eventually convert to props
     return (
-        <div className="card">
+        <div className="card border-dark">
             <div className="card-body">
                 <div className="d-flex flex-row justify-content-between">
                     <h4 className="card-title mb-1">Pick up shifts</h4>

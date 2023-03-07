@@ -3,7 +3,7 @@ import React from 'react'
 const TodoList = (props) => {
 
     return (
-        <div className="card">
+        <div className="card border-dark">
             <div className="card-body">
                 <h4 className="card-title">To do list</h4>
                 <TodoListComponent handleChange={props.handleChange} handleSaveNote={props.handleSaveNote} notesData={props.notesData} handleRemoveNote={props.handleRemoveNote}/>

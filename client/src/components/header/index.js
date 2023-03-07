@@ -26,10 +26,13 @@ const Header = () => {
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
-                {/* Add validation so only managers see this */}
-              <Nav.Link as={Link} to='/message'>
-                Message
-              </Nav.Link>
+                  {/* Add validation so only managers see this */}
+                  <Nav.Link as={Link} to='/message'>
+                    Message
+                  </Nav.Link>
+                  <Nav.Link as={Link} to='/hours'>
+                    Hours
+                  </Nav.Link>
                   <Nav.Link as={Link} to='/timecard'>
                     View Timecard
                   </Nav.Link>

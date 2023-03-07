@@ -24,7 +24,7 @@ const Timeclock = (props) => {
     }
 
     return (
-        <div className="card">
+        <div className="card border-dark">
             <div className="card-body">
                 <h4 className="card-title">Time Clock</h4>
                 <Clock format={'h:mm:ssa'} style={clockStyle} ticking={true} />
