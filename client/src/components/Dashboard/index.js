@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TodoList from '../TodoListComponent'
 import Timeclock from '../Timeclock';
-import Timesheet from '../Timesheet'
+import Timesheet from '../Timecard'
 import ManagerMessages from '../ManagerMessages';
 import ShiftPickup from '../ShiftPickup';
 

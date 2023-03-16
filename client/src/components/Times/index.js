@@ -1,12 +1,12 @@
 import React from 'react';
 
 const Times = (props) => {
-
+    const date = new Date(props.date);
     return (
                 <tr>
-                    <th scope="row">{props.date}</th>
-                    <td>{props.timeIn}</td>
-                    <td>{props.timeOut}</td>
+                    <th scope="row">{date.toLocaleDateString()}</th>
+                    <td>{date.toLocaleTimeString()}</td>
+                    <td>{props.action}</td>
                 </tr>
     );
 };

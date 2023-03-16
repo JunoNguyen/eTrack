@@ -1,24 +1,13 @@
 import React from 'react';
 import Times from '../Times';
+import { QUERY_ME } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
 const Timesheet = () => {
 
-    const times = [
-        {
-            date: '02/28/2023',
-            timeIn: '8:02 AM',
-            timeOut: '5:30 PM'
-        },
-        {
-            date: '03/1/2023',
-            timeIn: '8:04 AM',
-            timeOut: '5:25 PM'
-        },
-        {
-            date: '03/02/2023',
-            timeIn: '7:55 AM',
-            timeOut: '6:00 PM'
-        },
-    ]
+    const { loading, data } = useQuery(QUERY_ME);
+
+    const timesheetData = data?.me.timesheet || {};
+    console.log(timesheetData);
     return (
         <div className="card border-dark">
             <div className="card-body">
@@ -34,11 +23,11 @@ const Timesheet = () => {
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Time In</th>
-                            <th scope="col">Time Out</th>
+                            {/* <th scope="col">Time Out</th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        {times.map((time, index) => <Times key={index} date={time.date} timeIn={time.timeIn} timeOut={time.timeOut} />)}
+                        {timesheetData.map((time, index) => <Times key={index} date={time.time} action={time.action} />)}
                     </tbody>
                 </table>
             </div>

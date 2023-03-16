@@ -6,7 +6,7 @@ const typeDefs = gql`
     _id: ID!
     name: String!
     email: String
-    time: [Time]
+    timesheet: [Time]
     savedNotes: [Note]!
     messages: [Message]!
   }
