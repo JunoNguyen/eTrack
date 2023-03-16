@@ -23,7 +23,7 @@ const Timesheet = () => {
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Time In</th>
-                            {/* <th scope="col">Time Out</th> */}
+                            <th scope="col">Time Out</th>
                         </tr>
                     </thead>
                     <tbody>

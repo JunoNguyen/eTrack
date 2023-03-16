@@ -17,7 +17,7 @@ const Timeclock = (props) => {
         marginRight: '5px'
     };
 
-    const { loading, data } = useQuery(QUERY_ME);
+    const { loading, data, refetch } = useQuery(QUERY_ME);
     const [punch, { error }] = useMutation(PUNCH);
 
     const userData = data?.me || {};
@@ -28,6 +28,7 @@ const Timeclock = (props) => {
             const { data } = await punch({
                 variables: { action: punchType },
             });
+            refetch();
             console.log(data);
         } catch (err) {
             console.error(err);
