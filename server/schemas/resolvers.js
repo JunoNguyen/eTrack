@@ -68,7 +68,8 @@ const resolvers = {
 
       return { token, employee };
     },
-    clockIn: async (parent, { action }, context) => {
+    punch: async (parent, { action }, context) => {
+      console.log(action);
       if (context.user) {
         const { timesheet } = await Employee.findByIdAndUpdate(
           { _id: context.user._id },

@@ -1,22 +1,38 @@
 import React from 'react';
 import Clock from 'react-live-clock';
 
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_ME } from '../../utils/queries';
+import { PUNCH } from '../../utils/mutations';
 
 import Auth from '../../utils/auth'
 
 const Timeclock = (props) => {
-    const { loading, data } = useQuery(QUERY_ME);
 
-    const userData = data?.me || {};
-    
     const clockStyle = {
         fontSize: '2rem',
     };
 
     const marginRight = {
         marginRight: '5px'
+    };
+
+    const { loading, data } = useQuery(QUERY_ME);
+    const [punch, { error }] = useMutation(PUNCH);
+
+    const userData = data?.me || {};
+
+    const handlePunch = async (punchType) => {
+
+        try {
+            const { data } = await punch({
+                variables: { action: punchType },
+            });
+            console.log(data);
+        } catch (err) {
+            console.error(err);
+            console.log(error);
+        };
     };
 
     if (loading) {
@@ -32,7 +48,6 @@ const Timeclock = (props) => {
                 <div className="preview-item-content d-flex flex-grow my-2">
                     <div className="flex-grow">
                         <div className="d-flex d-md-block d-xl-flex justify-content-between">
-                            {/* <h6 className="preview-subject">EMPLOYEE NAME</h6> */}
                             {Auth.loggedIn() ? (
                                 <>
                                     <h6 className="preview-subject">{userData.name}</h6>
@@ -40,12 +55,11 @@ const Timeclock = (props) => {
                             ) : (
                                 <></>
                             )}
-                            {/* ADD CLOCK IN AND CLOCK OUT BUTTONS HERE */}
                         </div>
-                        {/* <div class> */}
-                        <button className="btn btn-success" style={marginRight}>Clock In</button>
-                        <button className='btn btn-danger'>Clock Out</button>
-                        {/* </div> */}
+                        <div>
+                            <button className="btn btn-success" style={marginRight} onClick={() => handlePunch('IN')}>Clock In</button>
+                            <button className='btn btn-danger' onClick={() => handlePunch('OUT')}>Clock Out</button>
+                        </div>
                     </div>
                 </div>
                 <div className="progress progress-md portfolio-progress">

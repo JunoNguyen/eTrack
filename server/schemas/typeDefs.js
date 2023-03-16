@@ -57,7 +57,7 @@ const typeDefs = gql`
   type Mutation {
     addEmployee(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    clockIn(action: PunchType!): Time
+    punch(action: PunchType!): Time
     # clockOut(timeId: ID!, clockOut: String!): Time
     # addTime(action: String!): Employee
     saveNote(noteData: NoteInput!): Employee
