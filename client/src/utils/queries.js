@@ -6,6 +6,11 @@ export const QUERY_ME = gql`
       _id
       name
       email
+      timesheet {
+        _id
+        time
+        action
+      }
       savedNotes {
         _id
         note

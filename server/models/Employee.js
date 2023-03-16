@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 const notesSchema = require('./Notes');
 const messagesSchema = require('./Messages');
+const punchSchema = require('./Punch');
 
 const profileSchema = new Schema({
   name: {
@@ -21,12 +22,7 @@ const profileSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  time: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Time'
-    }
-  ],
+  timesheet: [punchSchema],
   savedNotes: [notesSchema],
   messages: [messagesSchema],
 },

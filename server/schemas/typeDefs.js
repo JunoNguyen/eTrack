@@ -1,20 +1,20 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar Date
   type Employee {
     _id: ID!
     name: String!
     email: String
-    token: ID!
-    time: [Time]
+    timesheet: [Time]
     savedNotes: [Note]!
     messages: [Message]!
   }
 
   type Time {
     _id: ID
-    clockIn: String
-    clockOut: String    
+    time: Date
+    action: String    
   }
 
   type Note {
@@ -38,6 +38,11 @@ const typeDefs = gql`
     note: String!
   }
 
+  enum PunchType {
+    IN
+    OUT
+  }
+
   input MessageInput {
     message: String!
     receiverId: ID!
@@ -52,9 +57,9 @@ const typeDefs = gql`
   type Mutation {
     addEmployee(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    clockIn(clockIn: String!): Time
-    clockOut(timeId: ID!, clockOut: String!): Time
-    addTime(employeeId: ID!, timeId: ID!): Employee
+    punch(action: PunchType!): Time
+    # clockOut(timeId: ID!, clockOut: String!): Time
+    # addTime(action: String!): Employee
     saveNote(noteData: NoteInput!): Employee
     removeNote(noteId: ID!): Employee
     addMessage(messageData: MessageInput!): Employee

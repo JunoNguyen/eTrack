@@ -12,6 +12,15 @@ export const ADD_EMPLOYEE = gql`
   }
 `;
 
+export const PUNCH = gql`
+mutation Mutation($action: PunchType!) {
+  punch(action: $action) {
+    time
+    action
+    _id
+  }
+}`
+
 
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
