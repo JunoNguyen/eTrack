@@ -2,6 +2,7 @@
   "dependencies": {
     "concurrently": "^5.1.0",
     "currently": "^0.0.8",
+    "heroku": "^7.69.1",
     "react-chartjs-2": "^4.0.1",
     "react-jvectormap": "^0.0.16",
     "react-slick": "^0.28.1"
