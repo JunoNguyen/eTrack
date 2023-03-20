@@ -27,5 +27,8 @@
     "url": "https://github.com/JunoNguyen/eTrack/issues"
   },
   "homepage": "https://github.com/JunoNguyen/eTrack#readme",
-  "description": ""
+  "description": "",
+  "engines": {
+    "node": "18.x"
+  }
 }
