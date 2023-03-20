@@ -20,12 +20,12 @@ const Header = () => {
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
             <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/home'>
-                Home
-              </Nav.Link>
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
+                  <Nav.Link as={Link} to='/home'>
+                    Home
+                  </Nav.Link>
                   {/* Add validation so only managers see this */}
                   <Nav.Link as={Link} to='/message'>
                     Message
