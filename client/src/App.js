@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useEffect } from 'react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -49,6 +49,9 @@ const client = new ApolloClient({
 });
 
 function App() {
+  useEffect(() => {
+    document.title = "eTrack"
+ }, []);
   return (
     <div>
       <ApolloProvider client={client}>
