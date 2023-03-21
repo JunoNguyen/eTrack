@@ -34,31 +34,21 @@ const resolvers = {
   Query: {
     employees: async () => {
       // return Employee.find().populate('Time');
-      return Employee.find().populate('schedule')
+      return Employee.find().select('-__v').populate( 'Schedule', 'monday')
     },
-    // time: async () => {
-    //   return Time.find();
-    // },
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await Employee.findOne({ _id: context.user._id }).select('-__v -password');
+        const userData = await Employee.findOne({ _id: context.user._id }).select('-__v -password').populate('Schedule');
+        console.log(userData);
+        const scheduleData = await Schedule.findOne({_id: userData.scheduleId})
+        console.log(scheduleData);
 
         return userData;
       }
 
       throw new AuthenticationError('Not logged in');
     },
-    // employee: async (parent, args, context) => {
-    //   if (context.user) {
-    //     // const userData = await Employee.findOne({ _id: context.user }).select('-__v -password');
-    //     const userData = await context.user.messages.map(message =>  Employee.find({ _id: message.receiverId }));
-    //     console.log(userData);
 
-    //     return userData;
-    //   }
-
-    //   throw new AuthenticationError('Not logged in');
-    // },
   },
 
   Mutation: {
@@ -101,19 +91,6 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
-    // clockOut: async (parent, { timeId, clockOut }) => {
-    //   return Time.findOneAndUpdate(
-    //     { _id: timeId },
-    //     { clockOut: clockOut }
-    //   );
-    // },
-    // addTime: async (parent, { employeeId, timeId }) => {
-
-    //   return await Employee.findOneAndUpdate(
-    //     { _id: employeeId },
-    //     { $addToSet: { time: timeId } }
-    //   );
-    // },
     login: async (parent, { email, password }) => {
       const employee = await Employee.findOne({ email });
 
