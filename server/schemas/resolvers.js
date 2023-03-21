@@ -80,6 +80,18 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!');
     },
+    addShift: async (parent, { shifts }, context) => {
+      console.log(action);
+      if (context.user) {
+        const { schedule } = await Employee.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { schedule: shifts } },
+          { new: true }
+        );
+        return schedule;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
     // clockOut: async (parent, { timeId, clockOut }) => {
     //   return Time.findOneAndUpdate(
     //     { _id: timeId },
