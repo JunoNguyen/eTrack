@@ -26,7 +26,10 @@ const profileSchema = new Schema({
   timesheet: [punchSchema],
   savedNotes: [notesSchema],
   messages: [messagesSchema],
-  schedule: scheduleSchema
+  scheduleId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Schedule'
+  }
 },
   {
     toJSON: {

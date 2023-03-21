@@ -9,7 +9,7 @@ const typeDefs = gql`
     timesheet: [Time]
     savedNotes: [Note]!
     messages: [Message]!
-    schedule: Schedule
+    scheduleId: ID
   }
 
   type Time {
@@ -81,8 +81,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     punch(action: PunchType!): Time
     addShift(shifts: ScheduleInput!): Schedule
-    # clockOut(timeId: ID!, clockOut: String!): Time
-    # addTime(action: String!): Employee
+    assignShift(shiftId: ID!): Employee
     saveNote(noteData: NoteInput!): Employee
     removeNote(noteId: ID!): Employee
     addMessage(messageData: MessageInput!): Employee

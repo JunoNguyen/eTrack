@@ -1,4 +1,4 @@
-const { Employee, Time } = require('../models');
+const { Employee, Schedule } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
@@ -34,7 +34,7 @@ const resolvers = {
   Query: {
     employees: async () => {
       // return Employee.find().populate('Time');
-      return Employee.find()
+      return Employee.find().populate('schedule')
     },
     // time: async () => {
     //   return Time.find();
@@ -76,19 +76,28 @@ const resolvers = {
           { $push: { timesheet: { time: Date.now(), action: action } } },
           { new: true }
         );
-        return timesheet[timesheet.length-1];
+        return timesheet[timesheet.length - 1];
       }
       throw new AuthenticationError('You need to be logged in!');
     },
     addShift: async (parent, { shifts }, context) => {
-      console.log(action);
+      console.log(shifts)
       if (context.user) {
-        const { schedule } = await Employee.findByIdAndUpdate(
+        const updatedEmployee = await Schedule.create(
+          shifts
+        );
+        return updatedEmployee;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    assignShift: async (parent, { shiftId }, context) => {
+      if (context.user) {
+        const updatedEmployee = await Employee.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { schedule: shifts } },
+          { $set: { scheduleId: shiftId } },
           { new: true }
         );
-        return schedule;
+        return updatedEmployee;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -169,13 +178,13 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     employee: async (parent, { id }, context) => {
-        if (id) {
-          const userData = await Employee.findOne({ _id: id })
-  
-          return userData;
-        }
-  
-        throw new AuthenticationError('Not logged in');
+      if (id) {
+        const userData = await Employee.findOne({ _id: id })
+
+        return userData;
+      }
+
+      throw new AuthenticationError('Not logged in');
     },
   }
 }

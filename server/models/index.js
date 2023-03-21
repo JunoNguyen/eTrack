@@ -1,4 +1,4 @@
 const Employee = require('./Employee');
-const Time = require('./Punch');
+const Schedule = require('./Schedule');
 
-module.exports = { Employee, Time };
+module.exports = { Employee, Schedule };
