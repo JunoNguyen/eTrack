@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import LoginForm from '../components/LoginForm';
+import SignupForm from '../components/SignupForm';
 
 export default function BasePage() {
+
+    const [method, setMethod] = useState('login');
+
     return (
         <div>
-            Implement a login page or something here.
+            <LoginForm />
         </div>
     )
 };

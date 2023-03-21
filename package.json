@@ -1,11 +1,15 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "concurrently": "^5.1.0",
     "currently": "^0.0.8",
     "heroku": "^7.69.1",
     "react-chartjs-2": "^4.0.1",
     "react-jvectormap": "^0.0.16",
     "react-slick": "^0.28.1"
+=======
+    "concurrently": "^5.1.0"
+>>>>>>> main
   },
   "name": "etrack",
   "version": "1.0.0",
@@ -28,5 +32,8 @@
     "url": "https://github.com/JunoNguyen/eTrack/issues"
   },
   "homepage": "https://github.com/JunoNguyen/eTrack#readme",
-  "description": ""
+  "description": "",
+  "engines": {
+    "node": "16.x"
+  }
 }
