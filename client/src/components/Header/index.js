@@ -39,6 +39,9 @@ const Header = () => {
                   <Nav.Link as={Link} to='/list-shift'>
                     List a Shift
                   </Nav.Link>
+                  <Nav.Link as={Link} to='/all-schedules'>
+                    View all Schedules
+                  </Nav.Link>
                   <Nav.Link as={Link} to='/'>
                     Clock In
                   </Nav.Link>

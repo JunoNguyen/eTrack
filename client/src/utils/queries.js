@@ -33,3 +33,18 @@ export const QUERY_EMPLOYEES = gql`
     }
   }
 `;
+
+export const QUERY_SCHEDULES = gql`
+{
+  schedules {
+    _id
+    monday
+    tuesday
+    wednesday
+    thursday
+    friday
+    saturday
+    sunday
+  }
+}
+`

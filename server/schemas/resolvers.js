@@ -34,7 +34,7 @@ const resolvers = {
   Query: {
     employees: async () => {
       // return Employee.find().populate('Time');
-      return Employee.find().select('-__v').populate( 'Schedule', 'monday')
+      return Employee.find().select('-__v')
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -48,6 +48,9 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    schedules: async () => {
+      return Schedule.find()
+    }
 
   },
 

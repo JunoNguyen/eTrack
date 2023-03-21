@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import BasePage from './pages/BasePage';
+import ScheduleView from './pages/ScheduleView';
 
 import MessageForm from './components/MessageForm';
 import ScheduledHours from './components/ScheduledHours';
@@ -64,6 +65,9 @@ function App() {
               </Route>
               <Route exact path='/'>
                 <BasePage />
+              </Route>
+              <Route exact path='/all-schedules'>
+                <ScheduleView />
               </Route>
               <Route exact path='/message'>
                 <MessageForm />

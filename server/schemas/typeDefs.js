@@ -71,9 +71,9 @@ const typeDefs = gql`
   }
 
   type Query {
-    employees: [Employee]!
-    time: [Time]!
-    me: Employee!
+    schedules: [Schedule]
+    employees: [Employee]
+    me: Employee
   }
 
   type Mutation {
