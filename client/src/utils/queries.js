@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_ME = gql`
   {
@@ -34,17 +34,16 @@ export const QUERY_EMPLOYEES = gql`
   }
 `;
 
-export const QUERY_SCHEDULES = gql`
-{
-  schedules {
-    _id
-    monday
-    tuesday
-    wednesday
-    thursday
-    friday
-    saturday
-    sunday
+export const QUERY_SHIFTS = gql`
+  {
+    shifts {
+      _id
+      startTime
+      endTime
+      assignedEmployee {
+        name
+        email
+      }
+    }
   }
-}
-`
+`;
