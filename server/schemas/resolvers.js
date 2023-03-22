@@ -1,23 +1,23 @@
-const { Employee, Schedule } = require('../models');
-const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
+const { Employee, Schedule, Shifts } = require("../models");
+const { AuthenticationError } = require("apollo-server-express");
+const { signToken } = require("../utils/auth");
 
-const { GraphQLScalarType, Kind } = require('graphql');
+const { GraphQLScalarType, Kind } = require("graphql");
 
 const dateScalar = new GraphQLScalarType({
-  name: 'Date',
-  description: 'Date custom scalar type',
+  name: "Date",
+  description: "Date custom scalar type",
   serialize(value) {
     if (value instanceof Date) {
       return value.getTime(); // Convert outgoing Date to integer for JSON
     }
-    throw Error('GraphQL Date Scalar serializer expected a `Date` object');
+    throw Error("GraphQL Date Scalar serializer expected a `Date` object");
   },
   parseValue(value) {
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       return new Date(value); // Convert incoming integer to Date
     }
-    throw new Error('GraphQL Date Scalar parser expected a `number`');
+    throw new Error("GraphQL Date Scalar parser expected a `number`");
   },
   parseLiteral(ast) {
     if (ast.kind === Kind.INT) {
@@ -34,24 +34,35 @@ const resolvers = {
   Query: {
     employees: async () => {
       // return Employee.find().populate('Time');
-      return Employee.find().select('-__v')
+      return Employee.find().select("-__v");
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await Employee.findOne({ _id: context.user._id }).select('-__v -password').populate('Schedule');
+        const userData = await Employee.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("Schedule");
         console.log(userData);
-        const scheduleData = await Schedule.findOne({_id: userData.scheduleId})
+        const scheduleData = await Schedule.findOne({
+          _id: userData.scheduleId,
+        });
         console.log(scheduleData);
 
         return userData;
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
     schedules: async () => {
-      return Schedule.find()
-    }
-
+      return Schedule.find();
+    },
+    shifts: async () => {
+      // Todo: allow filtering on this result
+      return Shifts.find()
+        .populate({
+          path: "assignedEmployee",
+        })
+        .populate({ path: "createdBy" });
+    },
   },
 
   Mutation: {
@@ -71,17 +82,31 @@ const resolvers = {
         );
         return timesheet[timesheet.length - 1];
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
+    // TODO
     addShift: async (parent, { shifts }, context) => {
-      console.log(shifts)
+      console.log(shifts);
       if (context.user) {
-        const updatedEmployee = await Schedule.create(
-          shifts
-        );
+        const updatedEmployee = await Schedule.create(shifts);
         return updatedEmployee;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    createShift: async (_, { startTime, endTime }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("Unauthorized");
+      }
+      console.info(
+        `Creating shift: ${startTime.toString()} - ${endTime.toString()}`
+      );
+      const newShift = await Shifts.create({
+        createdBy: context.user._id,
+        startTime,
+        endTime,
+      });
+      console.info(`Done.`);
+      return newShift;
     },
     assignShift: async (parent, { shiftId }, context) => {
       if (context.user) {
@@ -92,19 +117,19 @@ const resolvers = {
         );
         return updatedEmployee;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
     login: async (parent, { email, password }) => {
       const employee = await Employee.findOne({ email });
 
       if (!employee) {
-        throw new AuthenticationError('No profile with this email found!');
+        throw new AuthenticationError("No profile with this email found!");
       }
 
       const correctPw = await employee.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect password!');
+        throw new AuthenticationError("Incorrect password!");
       }
 
       const token = signToken(employee);
@@ -112,7 +137,7 @@ const resolvers = {
     },
     saveNote: async (parent, { noteData }, context) => {
       if (context.user) {
-        console.log(context.user)
+        console.log(context.user);
         const updatedEmployee = await Employee.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { savedNotes: noteData } },
@@ -121,7 +146,7 @@ const resolvers = {
 
         return updatedEmployee;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
     removeNote: async (parent, { noteId }, context) => {
       if (context.user) {
@@ -134,10 +159,10 @@ const resolvers = {
         return updatedEmployee;
       }
 
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
     addMessage: async (parent, { messageData }, context) => {
-      console.log('backend hit')
+      console.log("backend hit");
       if (context.user) {
         const updatedEmployee = await Employee.findByIdAndUpdate(
           { _id: messageData.receiverId },
@@ -146,26 +171,26 @@ const resolvers = {
               messages: {
                 message: messageData.message,
                 senderId: context.user._id,
-                senderName: context.user.name
-              }
-            }
+                senderName: context.user.name,
+              },
+            },
           },
           { new: true }
         );
 
         return updatedEmployee;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
     employee: async (parent, { id }, context) => {
       if (id) {
-        const userData = await Employee.findOne({ _id: id })
+        const userData = await Employee.findOne({ _id: id });
 
         return userData;
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
-  }
-}
+  },
+};
 module.exports = resolvers;

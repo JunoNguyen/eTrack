@@ -11,10 +11,12 @@ const shiftSchema = new Schema({
   },
   assignedEmployee: {
     type: Types.ObjectId,
+    ref: 'Employee',
     required: false,
   },
   createdBy: {
     type: Types.ObjectId,
+    ref: 'Employee',
     required: true,
   },
   // updatedAt: {

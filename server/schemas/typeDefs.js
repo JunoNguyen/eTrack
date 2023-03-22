@@ -12,6 +12,14 @@ const typeDefs = gql`
     scheduleId: ID
   }
 
+  type Shift {
+    startTime: Date!
+    endTime: Date!
+    assignedEmployee: Employee
+    createdBy: Employee
+    createdAt: Date!
+  }
+
   type Time {
     _id: ID
     time: Date
@@ -63,7 +71,7 @@ const typeDefs = gql`
   enum PunchType {
     IN
     OUT
-  }
+  } 
 
   input MessageInput {
     message: String!
@@ -74,6 +82,7 @@ const typeDefs = gql`
     schedules: [Schedule]
     employees: [Employee]
     me: Employee
+    shifts(id: ID, startTime: Date, endTime: Date): [Shift]
   }
 
   type Mutation {
@@ -86,6 +95,7 @@ const typeDefs = gql`
     removeNote(noteId: ID!): Employee
     addMessage(messageData: MessageInput!): Employee
     employee(id: ID!): Employee
+    createShift(startTime: Date!, endTime: Date!): Shift
   }
 `;
 
