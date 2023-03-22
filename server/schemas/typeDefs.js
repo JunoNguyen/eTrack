@@ -9,10 +9,10 @@ const typeDefs = gql`
     timesheet: [Time]
     savedNotes: [Note]!
     messages: [Message]!
-    scheduleId: ID
   }
 
   type Shift {
+    _id: ID!
     startTime: Date!
     endTime: Date!
     assignedEmployee: Employee
@@ -38,17 +38,6 @@ const typeDefs = gql`
     senderName: String!
   }
 
-  type Schedule {
-    _id: ID
-    monday: String
-    tuesday: String
-    wednesday: String
-    thursday: String
-    friday: String
-    saturday: String
-    sunday: String
-  }
-
   type Auth {
     token: ID!
     employee: Employee
@@ -56,16 +45,6 @@ const typeDefs = gql`
 
   input NoteInput {
     note: String!
-  }
-
-  input ScheduleInput {
-    monday: String
-    tuesday: String
-    wednesday: String
-    thursday: String
-    friday: String
-    saturday: String
-    sunday: String
   }
 
   enum PunchType {
@@ -79,7 +58,6 @@ const typeDefs = gql`
   }
 
   type Query {
-    schedules: [Schedule]
     employees: [Employee]
     me: Employee
     shifts(id: ID, startTime: Date, endTime: Date): [Shift]
@@ -89,8 +67,7 @@ const typeDefs = gql`
     addEmployee(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     punch(action: PunchType!): Time
-    addShift(shifts: ScheduleInput!): Schedule
-    assignShift(shiftId: ID!): Employee
+    takeShift(shiftId: ID!): Shift
     saveNote(noteData: NoteInput!): Employee
     removeNote(noteId: ID!): Employee
     addMessage(messageData: MessageInput!): Employee

@@ -1,4 +1,4 @@
-const { Employee, Schedule, Shifts } = require("../models");
+const { Employee, Shifts } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
@@ -41,19 +41,10 @@ const resolvers = {
         const userData = await Employee.findOne({ _id: context.user._id })
           .select("-__v -password")
           .populate("Schedule");
-        console.log(userData);
-        const scheduleData = await Schedule.findOne({
-          _id: userData.scheduleId,
-        });
-        console.log(scheduleData);
-
         return userData;
       }
 
       throw new AuthenticationError("Not logged in");
-    },
-    schedules: async () => {
-      return Schedule.find();
     },
     shifts: async () => {
       // Todo: allow filtering on this result
@@ -84,15 +75,6 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    // TODO
-    addShift: async (parent, { shifts }, context) => {
-      console.log(shifts);
-      if (context.user) {
-        const updatedEmployee = await Schedule.create(shifts);
-        return updatedEmployee;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
     createShift: async (_, { startTime, endTime }, context) => {
       if (!context.user) {
         throw new AuthenticationError("Unauthorized");
@@ -108,14 +90,20 @@ const resolvers = {
       console.info(`Done.`);
       return newShift;
     },
-    assignShift: async (parent, { shiftId }, context) => {
+    takeShift: async (parent, { shiftId }, context) => {
       if (context.user) {
-        const updatedEmployee = await Employee.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $set: { scheduleId: shiftId } },
+        const updatedShift = await Shifts.findByIdAndUpdate(
+          { _id: shiftId },
+          { $set: { assignedEmployee: context.user._id } },
           { new: true }
-        );
-        return updatedEmployee;
+        )
+          .populate({
+            path: "assignedEmployee",
+          })
+          .populate({
+            path: "createdBy",
+          });
+        return updatedShift;
       }
       throw new AuthenticationError("You need to be logged in!");
     },

@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const notesSchema = require('./Notes');
 const messagesSchema = require('./Messages');
 const punchSchema = require('./Punch');
-const scheduleSchema = require('./Schedule');
 
 const profileSchema = new Schema({
   name: {
@@ -26,10 +25,6 @@ const profileSchema = new Schema({
   timesheet: [punchSchema],
   savedNotes: [notesSchema],
   messages: [messagesSchema],
-  scheduleId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Schedule'
-  }
 },
   {
     toJSON: {
