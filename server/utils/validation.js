@@ -1,4 +1,8 @@
-const validShift = (shift) => /\b\d{1,2}:\d{2} [AP]M - \d{1,2}:\d{2} [AP]M\b/.test(shift);
+function isValidShift(startTime, endTime) {
+  if (startTime.getTime() >= endTime.getTime()) {
+    return false;
+  }
+  return true;
+}
 
-
-module.exports = validShift;
+module.exports = { isValidShift };

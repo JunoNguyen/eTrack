@@ -1,8 +1,12 @@
 const { Employee, Shifts } = require("../models");
-const { AuthenticationError } = require("apollo-server-express");
+const {
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
 const { GraphQLScalarType, Kind } = require("graphql");
+const { isValidShift } = require("../utils/validation");
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -76,6 +80,9 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     createShift: async (_, { startTime, endTime }, context) => {
+      if (!isValidShift(startTime, endTime)) {
+        throw new UserInputError("Start time must be less than end time");
+      }
       if (!context.user) {
         throw new AuthenticationError("Unauthorized");
       }
@@ -86,7 +93,9 @@ const resolvers = {
         createdBy: context.user._id,
         startTime,
         endTime,
-      });
+      })
+        .populate({ path: "assignedEmployee" })
+        .populate({ path: "createdBy" });
       console.info(`Done.`);
       return newShift;
     },
