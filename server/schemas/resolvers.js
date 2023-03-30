@@ -94,8 +94,8 @@ const resolvers = {
         startTime,
         endTime,
       })
-        .populate({ path: "assignedEmployee" })
-        .populate({ path: "createdBy" });
+      // .populate({ path: "assignedEmployee" })
+      // .populate({ path: "createdBy" });
       console.info(`Done.`);
       return newShift;
     },

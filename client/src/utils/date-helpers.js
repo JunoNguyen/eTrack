@@ -36,6 +36,9 @@ export const getMonthName = () => {
     return monthNames[currentMonth];
 };
 
+export const getUnix = (date) => parseInt((date.getTime() / 1000).toFixed(0))
+
+
 // FILLER CODE FOR NOW, WILL OPTIMIZE LATER
 export const fillFirstDays = (days) => {
     const numberDay = daysInThisMonth(0) + 1 - days[0].dayNumber

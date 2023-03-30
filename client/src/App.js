@@ -15,6 +15,7 @@ import ScheduleView from './pages/ScheduleView';
 
 import MessageForm from './components/MessageForm';
 import ScheduledHours from './components/ScheduledHours';
+import ShiftForm from './components/ShiftForm';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -74,6 +75,9 @@ function App() {
               </Route>
               <Route exact path='/hours'>
                 <ScheduledHours />
+              </Route>
+              <Route exact path='/create-shift'>
+                <ShiftForm />
               </Route>
             </div>
           </div>
